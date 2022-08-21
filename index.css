@@ -1,0 +1,35 @@
+body{
+background-color: #8fd212;
+}
+div{
+    font-size: xx-large;
+    text-align: center;
+}
+#matrix_size{
+    text-align: center;
+    font-size: xx-large;
+    height: 60px;
+    width:100px
+    
+}
+td{
+    width:40px;
+    height: 40px;
+    border: solid green 2px;
+}
+table{
+    border:solid brown 4px;
+}
+small{
+    font-size: 13px;
+}
+button{
+    position:absolute;
+    right:300px;
+    width: 140px;
+    height: 75px;
+    background-color: aqua;
+    box-shadow: #8fd212;
+    font-size: xx-large;
+
+}
