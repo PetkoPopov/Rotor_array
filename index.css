@@ -1,11 +1,12 @@
 body{
-background-color: #8fd212;
+background-color: #6fa40e;
 }
 div{
     font-size: xx-large;
     text-align: center;
 }
 #matrix_size{
+    position: relative;
     text-align: center;
     font-size: xx-large;
     height: 60px;
