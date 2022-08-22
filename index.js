@@ -1,57 +1,72 @@
 class Sqr{
-    constructor(i,color,row,col){
+    constructor(i,color){
 this.position=i;
 this.color=color;
     }
 }
 
-
+var colors=[]
 let div = document.createElement('div')
 div.innerHTML='Hello'
 let body = document.getElementsByTagName('body')[0]
 body.appendChild(div)
-let matrix = document.getElementsByTagName('matrix')[0]
-body.appendChild(matrix)
-let matrix_size = document.getElementById('matrix_size')
-let num = Number(matrix_size.value)
+
+
 var arr_sqr=[]
 
-var table = document.createElement('table')
-function makeTable(){
+var table = document.getElementsByTagName('table')[0]
 
+function makeTable(){
+    let matrix_size = document.getElementById('matrix_size')
+    let num = Number(matrix_size.value)
 var tr = document.createElement('tr')
+let is_gen_color= true
+
+let color 
 for(i=0;i<num*num;i++){
 
+   if(is_gen_color) {
+     color = generateColor()
+      is_gen_color=false  }
+    
      td = document.createElement('td')
      let row_=Math.floor(i/num)
 
     for(e=0;e<num;e++){
-        createSqr(row_,e)
+        createSqr(row_,e,color)
     }
     tr.appendChild(td)
 
     if(i%num== (num-1)  ){
+        is_gen_color=true
     table.appendChild(tr)
-    tr = document.createElement('tr')
+    tr = document.createElement('tr')}
+
 
 }
-}
-matrix.appendChild(table)
 }
 
 
 function rotor(){
 
-
+    let matrix_size = document.getElementById('matrix_size')
+    let num = Number(matrix_size.value)
     for(i=0;i<arr_sqr.length;i++){
- let n = arr_sqr[i].position
- let row = Math.floor(n/num)
- let col = n%num  
-let index = col*num+num-(1+row)
-arr_sqr[i].rotor_index=n
-arr_sqr[i].position=index
 
-    }
+        let n = arr_sqr[i].position
+
+        let row = Math.floor(n/num)
+
+        let col = n%num  
+
+        let index = col*num+num-(1+row)
+
+        arr_sqr[i].rotor_index=n
+
+        arr_sqr[i].position=index
+    
+}
+
     console.log(arr_sqr)    
 }
 
@@ -74,10 +89,12 @@ button_rotor.addEventListener('click',()=>{
 })
 
 function showTable(){
-    
+   document.getElementsByTagName('table')[0].parentNode.removeChild(table)
 
-    let table_rotor =document.createElement('table')
-    let tr_rotor = document.createElement('tr')
+   table = document.createElement('table')
+   let tr_rotor = document.createElement('tr')
+   let matrix_size = document.getElementById('matrix_size')
+    let num = Number(matrix_size.value)
     for(i=0;i<arr_sqr.length;i++){
         let td_rotor= document.createElement('td')
         let count = 0
@@ -91,26 +108,69 @@ function showTable(){
         })
         
         tr_rotor.appendChild(td_rotor)
-    
         if(i%num == (num-1)  ){
-        console.log("made row")
-        // table_rotor.appendChild(tr_rotor)
         table.appendChild(tr_rotor)
         tr_rotor = document.createElement('tr')
     }
     
     }  // end for
-    matrix.appendChild(table)  
+    
+
+    body.appendChild(table)
+    
 }//end function
-function createSqr(row_ , l){
+function createSqr(row_ , l,color){
     if(row_ == l){
 
         td.innerHTML='<small>'+i+'</small>' 
-        td.style.backgroundColor='#14bd1f'
-        
-       
-        
-        let sqr = new Sqr(i,'#17ad6c')
+        td.style.backgroundColor = color
+        let sqr = new Sqr(i,color)
         arr_sqr.push(sqr)
     }
+}
+function generateColor(){
+let color='hsl('
+let h = 100
+let w = 50
+let b = 50
+color+=String(h)
+color+= ','
+color+=String(w)
+color+='% , '
+color+=String(b)
+color+='%)'
+h_lp = true
+w_hl =false
+b_hl =false
+while(colors.includes(color)){
+if(h_lp){h+=50}   
+    if(h>=359){
+        h=0
+        h_lp=false
+        w_hl=true
+     }
+     if(w_hl){
+        w+=15
+        h_lp=true
+        w_hl=false
+     }
+     if(w>=100){
+        b_hl=true
+        w=0
+        b_hl=true
+     }
+     if(b_hl){
+        b+=10
+        b_hl=false
+     }
+    color='hsl('
+    color+=String(h)
+    color+= ','
+    color+=String(w)
+    color+='%, '
+    color+=String(b)
+    color+='%)'
+}
+colors.push(color)
+return color 
 }
